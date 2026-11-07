@@ -66,9 +66,9 @@ nhà phát hành cung cấp bộ cài Anki đầy đủ; không cần compiler.
 
 Runtime artifact không mang MSI, engine DLL, Lang, voicebanks, GUI patch,
 addon hoặc prefix. Setup Anki lấy GUI/addon từ bundle và backend từ release
-này. Anki 0.3.0 đã đóng gói runtime mới mặc định; bản 0.2.0 giữ trong tag
-lịch sử, checksum 0.3.0 được tạo riêng bằng tools/build_release.py.
+này. Anki 0.3.1 đã đóng gói runtime mới mặc định; bản 0.2.0 giữ trong tag
+lịch sử, checksum bản Anki hiện hành được tạo riêng bằng tools/build_release.py.
 
-Cài mới chạy start-setup.sh của bộ Anki 0.3.0. Bản đã cài nâng cấp có backup/manifest/receipt
+Cài mới chạy start-setup.sh của bộ Anki 0.3.1. Bản đã cài nâng cấp có backup/manifest/receipt
 riêng theo [CONNECT_VI.md mục 8](CONNECT_VI.md#8-nâng-cấp-backend-chung-để-có-streamingcache-quota-dev-tùy-chọn).
 Đây chưa phải updater crash-safe hoặc cơ chế tự update trên máy khách.

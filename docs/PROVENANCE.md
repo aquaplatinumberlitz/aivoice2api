@@ -16,7 +16,7 @@ C bên cạnh script; lỗi worker dẫn tới journal đúng instance thay vì 
 build đóng gói source/worker theo version và manifest.
 Giao thức native, HTTP và logic chọn giọng được giữ nguyên.
 
-Các ghi chú RE gốc tiếp tục lưu ở Anki `developer-kit/`; chúng phản ánh binary
+Các ghi chú RE gốc hiện lưu ở Anki `archive/` (đường dẫn tại commit nguồn trong bảng giữ nguyên); chúng phản ánh binary
 2.14.1 đã kiểm chứng. Không coi finding đó là bảo đảm cho phiên bản engine khác.
 Engine và runtime lic vẫn bị kiểm hash theo baseline hiện tại; lần tách repo
 không mở rộng danh sách binary tương thích hoặc thay đổi activation GUI.

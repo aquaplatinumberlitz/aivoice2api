@@ -1,4 +1,8 @@
-# Nối A.I.VOICE2 với Anki và vntext — hướng dẫn dev mới
+# Vận hành, chẩn đoán và nâng cấp backend cho dev hỗ trợ
+
+**Cài lần đầu: dùng [Quickstart A–Z](https://github.com/aquaplatinumberlitz/aivoice2-anki/blob/main/docs/QUICKSTART_VI.md).**
+Trang này dành cho người cần kiểm runtime/API hoặc nâng cấp có backup.
+Các script dài và mục 8 không thuộc bước cài mới.
 
 Cập nhật: 2026-11-07. Phạm vi đã dùng: Linux x86-64, Wine, Anki Desktop
 native và vntext trên Wayland có layer-shell. Windows native/Anki Flatpak
@@ -27,7 +31,7 @@ GUI và worker có Wine prefix riêng, cùng đọc dữ liệu giọng trong m�
 
 | Thành phần | Lấy ở đâu | Công dụng |
 |---|---|---|
-| Bộ cài Anki 0.3.0 | Repo private `aquaplatinumberlitz/aivoice2-anki` | Setup Qt, addon, artifact backend mới đã build, dev-kit/docs |
+| Bộ cài Anki 0.3.1 | Repo private `aquaplatinumberlitz/aivoice2-anki` | Setup Qt, addon, artifact backend mới đã build, dev-kit/docs |
 | MSI Editor 2.14.1 | Bộ cài được cung cấp riêng | App và engine; không gồm Lang/voicebanks |
 | Lang và voicebanks | Dữ liệu được cung cấp riêng | Từ điển Standard/Kansai và các giọng được chọn |
 | aivoice2api | Repo private `aquaplatinumberlitz/aivoice2api` | Source backend, worker, test và artifact versioned |
@@ -50,24 +54,24 @@ Khách chỉ cần runtime: Python 3, PySide6 hoặc PyQt6, Wine, msitools
 (`msiextract`) và Anki Desktop. vntext cần các dependency trong README repo
 vntext và `pw-play`; dev build worker nâng cấp cần MinGW x86-64.
 
-Mở Bash và khai báo các đường dẫn. Đây là ví dụ máy hiện tại; máy khác thay bằng
-đường dẫn của mình. Luôn giữ dấu nháy vì đường dẫn có khoảng trắng:
+Mở terminal tại **thư mục bộ cài đã giải nén** hoặc checkout Anki nếu cần
+chạy setup. Lưu đường dẫn thư mục đó; sau đó nhập riêng root đã cài:
 
 ```bash
-export AIVOICE_BUNDLE='/mnt/m2sata/A.I.VOICE2-futago/aivoice2-anki'
-export AIVOICE_API_REPO='/mnt/m2sata/A.I.VOICE2-futago/aivoice2api'
-export VNTEXT_REPO='/mnt/m2sata/A.I.VOICE2-futago/vntext'
-export AIVOICE_ROOT="$HOME/.local/share/aivoice2-local"
+export AIVOICE_BUNDLE="$PWD"
+read -r -e -i "$HOME/.local/share/aivoice2-local" -p 'Thu muc da cai: ' AIVOICE_ROOT
+export AIVOICE_ROOT
 export PYTHONDONTWRITEBYTECODE=1
 ```
 
-`AIVOICE_BUNDLE` là repo/bộ bàn giao; `AIVOICE_ROOT` là **bản đã cài**.
-Không trỏ ROOT vào repo, thư mục voicebanks hoặc Wine prefix.
-Các lệnh sau giả định ROOT đúng bản muốn dùng, cùng tài khoản Linux chạy Anki.
+Nếu cài vào root khác mặc định, dán đúng đường dẫn ở câu hỏi trên.
+AIVOICE_BUNDLE là source/bộ cài, AIVOICE_ROOT là **bản đã cài** có
+config/runtime.json. Không trỏ ROOT vào repo, Lang/Voice hoặc Wine prefix.
+Các lệnh sau chạy bằng cùng tài khoản Linux dùng Anki; không cần sudo.
 
 ## 3. Cài mới bằng setup
 
-1. Dùng bộ cài Anki 0.3.0 theo [hướng dẫn bộ cài](https://github.com/aquaplatinumberlitz/aivoice2-anki/blob/main/docs/INSTALLER_VI.md).
+1. Dùng bộ cài Anki 0.3.1 theo [hướng dẫn bộ cài](https://github.com/aquaplatinumberlitz/aivoice2-anki/blob/main/docs/INSTALLER_VI.md).
    Backend mới đã đóng gói sẵn. Đóng Anki nếu chọn cài addon rồi chạy wizard.
 2. Chọn MSI Editor 2.14.1, nguồn Lang và nguồn voicebanks.
 3. Đánh dấu giọng muốn dùng. Akane dùng Kansai; các giọng còn lại dùng
@@ -222,13 +226,8 @@ Romaji và nghĩa Việt không được addon tự sinh.
 
 ## 7. Nối vntext vào cùng URL
 
-Build vntext theo README nếu chưa có binary:
-
-```bash
-cd "$VNTEXT_REPO"
-cargo build --release --locked
-./target/release/vntext
-```
+Nếu chưa có vntext, làm [hướng dẫn cài client](https://github.com/aquaplatinumberlitz/vntext/blob/main/docs/INSTALL_VI.md).
+Không cần source backend để build vntext.
 
 1. Người dùng mở game, chọn game trong vntext rồi **Hiện phụ đề**.
 2. Bấm loa hoặc bánh răng → **Giọng đọc → Kết nối nâng cao**.
@@ -252,17 +251,19 @@ tuần tự hóa synth; mỗi client có phần phát âm thanh riêng.
 ## 8. Nâng cấp backend chung để có streaming/cache quota (dev, tùy chọn)
 
 Bỏ qua nếu bản đã cài có backend đúng lock/capabilities cần dùng. Bộ cài
-Anki 0.3.0 dùng backend mới mặc định. Phần dưới dành cho nâng **bản đã cài**,
+Anki 0.3.1 dùng backend mới mặc định. Phần dưới dành cho nâng **bản đã cài**,
 không phải bước cài mới hoặc lý do tự sửa hash file phát hành.
 
 Bản nâng cấp lấy từ artifact `aivoice2api` cùng version/commit. Không cần
 Anki/vntext cài lại addon hoặc sửa URL. Giữ registry đã đăng ký giọng,
 config, GUI patch, Lang/Voice của bản đang dùng.
 
-Dev build từ checkout sạch của phiên bản muốn triển khai:
+Dev build từ checkout sạch của phiên bản muốn triển khai. Mở terminal
+**tại gốc repo aivoice2api** trước khi chạy; repo này chỉ cần cho bước dev
+build. Dùng artifact Release đúng lock nếu không sửa backend:
 
 ```bash
-cd "$AIVOICE_API_REPO"
+export AIVOICE_API_REPO="$PWD"
 python3 -m unittest discover -s tests -v
 python3 tools/build_runtime.py
 export AIVOICE_BACKEND_RELEASE="$AIVOICE_API_REPO/dist/aivoice2api-0.1.0"
@@ -360,7 +361,7 @@ thêm/gỡ giọng vẫn phải đóng Editor/dừng service đúng instance. Kh
 “Tiếp tục khởi tạo” hay cài lại runtime cũ làm cách nâng cấp: nó có thể dùng
 snapshot backend cũ, không phải bản streaming đã triển khai. Manager 0.2.0
 còn giả định `Engine.speak()` trả 2 phần tử; source mới trả 3. Nếu cần
-khởi tạo lại hoặc demo qua manager, dùng manager Anki 0.3.0 rồi trỏ đúng
+khởi tạo lại hoặc demo qua manager, dùng manager Anki 0.3.1 rồi trỏ đúng
 bản cài. Không dùng manager snapshot cũ để kiểm backend mới.
 
 Rollback nếu cần: dừng service, lấy đúng backup vừa in, khôi phục từng file
@@ -429,10 +430,10 @@ nhật source hoặc payload phát hành.
 | WAV quota, tuổi file và lease | aivoice2api: `runtime/wav_cache.py` |
 | Gọi engine dưới Wine, trả PCM/timing | aivoice2api: `runtime/engine_worker.c`, `runtime/engine_api.h` |
 | Client HTTP, cache nghe lại, player | vntext: `src/tts.rs`; nút/dải và prepare trong `src/overlay.rs` |
-| Dialog Anki, preview/chèn media | Anki: `developer-kit/src/anki-addon/__init__.py`, `selection.js`, `editor_compat.py` |
+| Dialog Anki, preview/chèn media | Anki: `src/anki-addon/__init__.py`, `selection.js`, `editor_compat.py` |
 | Config/diagnose/service của runtime | aivoice2api: `runtime/runtime_config.py`, `runtime/runtime_cli.py` |
 | Cài đặt, đăng ký giọng, shortcut/addon | Anki: `src/setup/manager.py`, `voice_manager.py`, `integrations.py` |
-| Finding RE, build helper và GUI patch | Anki: `developer-kit/docs/DEV_HANDOVER_INDEX_VI.md`, `developer-kit/src/free-client/README.md` |
+| Finding RE, build helper và GUI patch | Anki: `src/free-client/README.md`, `archive/docs/DEV_HANDOVER_INDEX_VI.md` |
 
 Client mới bắt đầu bằng ba API ổn định: `GET /healthz`, `GET /v1/voices`,
 `POST /v1/speak` với JSON `{"text":"こんにちは。","voice":"id-từ-catalog"}`.
@@ -448,7 +449,7 @@ của prepare chỉ có nghĩa đã nhận việc. Stream chỉ thành công khi
 kết thúc thành công; ngắt HTTP giữa chừng không được cache như audio hoàn chỉnh.
 
 Test backend nằm ở `aivoice2api/tests/`; test installer hiện hành ở
-`aivoice2-anki/tests/`. Probe RE lịch sử còn trong developer-kit/tests;
+`aivoice2-anki/tests/`. Probe RE lịch sử còn trong archive/tests;
 không chạy tool research lên bản khách đang dùng. Sửa source addon chưa
 tự rebuild .ankiaddon. Phát hành mới cần artifact, manifest/checksum và
 version tương ứng; bản 0.2.0 còn nguyên trong tag cũ.
@@ -466,5 +467,5 @@ version tương ứng; bản 0.2.0 còn nguyên trong tag cũ.
 
 Tài liệu này chỉ duy trì tại `aivoice2api/docs/CONNECT_VI.md`. Hai repo client
 giữ link chuyển hướng từ đường dẫn cũ; không chép lại toàn bộ hướng dẫn.
-Ghi chú RE trong developer-kit phản ánh bundle lịch sử; source backend
+Ghi chú RE trong archive phản ánh bundle lịch sử; source backend
 hiện hành và hợp đồng API thuộc repo `aivoice2api`.

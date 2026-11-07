@@ -1,15 +1,18 @@
-# Tài liệu aivoice2api
+# Tài liệu backend: chọn theo việc cần làm
 
-Cập nhật 2026-11-07. Đây là nguồn tài liệu chung cho backend của ba repo.
+**Chỉ muốn cài và nghe? → [Quickstart A–Z](https://github.com/aquaplatinumberlitz/aivoice2-anki/blob/main/docs/QUICKSTART_VI.md).**
+Quickstart được duy trì ở repo bộ cài và nằm trong gói bàn giao; không
+chép một bản khác vào đây. Backend đã kèm trong bộ Anki 0.3.1.
 
-| Muốn làm gì | Đọc |
+| Bạn là / công việc | Tài liệu |
 |---|---|
-| Hiểu phân chia repo, runtime và trách nhiệm | [Kiến trúc](ARCHITECTURE_VI.md) |
-| Cài, tìm đúng service/URL, nối Anki/vntext, chẩn đoán và rollback | [Hướng dẫn kết nối](CONNECT_VI.md) |
-| Viết client HTTP hoặc sửa scheduler/stream/cache | [Hợp đồng API](API_VI.md) |
-| Build worker, phát hành artifact và cập nhật lock client | [Quy trình phát hành](RELEASE_VI.md) |
-| Truy nguồn source, finding RE và binary được kiểm chứng | [Provenance](PROVENANCE.md) |
+| Dev mới, muốn hiểu ba repo | [ARCHITECTURE_VI](ARCHITECTURE_VI.md) |
+| Hỗ trợ bản đã cài, kiểm root/URL/service/WAV | [CONNECT_VI mục 2–5](CONNECT_VI.md) |
+| Nâng backend có backup/rollback | [CONNECT_VI mục 8](CONNECT_VI.md#8-nâng-cấp-backend-chung-để-có-streamingcache-quota-dev-tùy-chọn) |
+| Viết client hoặc sửa protocol/hàng chờ/cache | [API_VI](API_VI.md) |
+| Build, đóng gói, phát hành và lock dependency | [RELEASE_VI](RELEASE_VI.md) |
+| Tra source gốc và giới hạn binary đã nghiên cứu | [PROVENANCE](PROVENANCE.md) |
 
-Hướng dẫn riêng addon/bộ cài nằm ở [Anki docs](https://github.com/aquaplatinumberlitz/aivoice2-anki/tree/main/docs).
-Trích text, overlay và PipeWire nằm ở [vntext docs](https://github.com/aquaplatinumberlitz/vntext/tree/main/docs).
-Không sao chép tài liệu API vào repo client; sửa tại đây rồi dẫn link.
+Installer/addon/GUI helper: [Anki docs](https://github.com/aquaplatinumberlitz/aivoice2-anki/tree/main/docs).
+Build/sử dụng extraction/overlay/PipeWire: [vntext docs](https://github.com/aquaplatinumberlitz/vntext/tree/main/docs).
+Finding/evidence cũ: [Anki archive](https://github.com/aquaplatinumberlitz/aivoice2-anki/tree/main/archive).

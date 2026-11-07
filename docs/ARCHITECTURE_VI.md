@@ -25,6 +25,10 @@ Ranh giới backend/manager: backend đọc cấu hình/registry để chạy; m
 đăng ký/gỡ giọng, chọn port và sinh service. Manager nhập runtime_config/CLI
 của artifact được ghim, không tự duy trì một phiên bản support khác.
 
+Source hiện hành Anki nằm ở src/anki-addon, src/setup và src/free-client;
+archive/ chứa hồ sơ/tool nghiên cứu cũ. [Quickstart](https://github.com/aquaplatinumberlitz/aivoice2-anki/blob/main/docs/QUICKSTART_VI.md)
+là điểm bắt đầu cài mới duy nhất, ba README cùng dẫn về đó.
+
 ## Repo khác với runtime đã cài
 
 Checkout chứa source. Release backend chứa worker đã build và support modules.
@@ -57,15 +61,15 @@ Source/test backend được chuyển từ vntext và support Anki sang repo nà
 [PROVENANCE.md](PROVENANCE.md) giữ commit nguồn. Bản sao backend ở vntext
 được gỡ, link cũ được chuyển hướng.
 
-Anki 0.3.0 đóng gói artifact backend mới ngay trong build/payload/runtime;
+Anki 0.3.1 đóng gói artifact backend mới ngay trong build/payload/runtime;
 start-setup.sh gốc dùng nó mặc định, không cần compose trước. Manager đã cài
 đọc cùng root/runtime với service, không giữ daemon/support fork riêng.
 
 Source backend WAV cũ, duplicate setup và tool build backend cũ đã gỡ khỏi
-main Anki. Tag v0.2.0 giữ bộ lịch sử; finding/RE vẫn có trên main và ghi rõ
+main Anki. Tag v0.2.0 giữ bộ lịch sử; finding/RE vẫn có trên main trong archive và ghi rõ
 phạm vi. tools/prepare_setup.py dành cho dev đóng gói theo lock, không là
 bước khách bắt buộc. tools/build_release.py tạo manifest/checksum/archive
-Anki mới; không lấy checksum 0.2.0 để kiểm bản 0.3.0.
+Anki mới; không lấy checksum 0.2.0 để kiểm bản hiện hành.
 
 Runtime đang chạy trên máy không đổi chỉ vì tái tổ chức source/docs. Muốn
 nâng cấp bản đã cài phải làm riêng theo hướng dẫn backup/verify/rollback.
