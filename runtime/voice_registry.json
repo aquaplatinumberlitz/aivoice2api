@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "voices": {
+    "KotonohaAkane_ns_48": {
+      "language": "kansai",
+      "distribution": "company-supplied",
+      "evidence": "notes/CLEAN_RUNTIME.md"
+    },
+    "KotonohaAoi_ns_48": {
+      "language": "standard",
+      "distribution": "company-supplied",
+      "evidence": "notes/CLEAN_RUNTIME.md"
+    },
+    "MeikaHime_ns_48": {
+      "language": "standard",
+      "distribution": "company-supplied",
+      "evidence": "notes/CLEAN_RUNTIME.md"
+    },
+    "MeikaMikoto_ns_48": {
+      "language": "standard",
+      "distribution": "company-supplied",
+      "evidence": "notes/CLEAN_RUNTIME.md"
+    },
+    "akane_west_emo_48": {
+      "language": "kansai",
+      "distribution": "research-only-installed-assets",
+      "evidence": "notes/VOICE_IDENTITY.md"
+    },
+    "akane_west_mini_48": {
+      "language": "kansai",
+      "distribution": "research-only-installed-assets",
+      "evidence": "notes/VOICE_IDENTITY.md"
+    },
+    "akane_west_syou_48": {
+      "language": "kansai",
+      "distribution": "research-only-installed-assets",
+      "evidence": "notes/VOICE_IDENTITY.md"
+    },
+    "aoi_emo_48": {
+      "language": "standard",
+      "distribution": "research-only-installed-assets",
+      "evidence": "notes/VOICE_IDENTITY.md"
+    },
+    "aoi_mini_48": {
+      "language": "standard",
+      "distribution": "research-only-installed-assets",
+      "evidence": "notes/VOICE_IDENTITY.md"
+    },
+    "aoi_syou_48": {
+      "language": "standard",
+      "distribution": "research-only-installed-assets",
+      "evidence": "notes/VOICE_IDENTITY.md"
+    },
+    "galaco_48": {
+      "language": "standard",
+      "distribution": "research-only-installed-assets",
+      "evidence": "notes/VOICE_IDENTITY.md"
+    }
+  }
+}
