@@ -57,11 +57,15 @@ Source/test backend được chuyển từ vntext và support Anki sang repo nà
 [PROVENANCE.md](PROVENANCE.md) giữ commit nguồn. Bản sao backend ở vntext
 được gỡ, link cũ được chuyển hướng.
 
-Anki giữ nguyên bundle 0.2.0 và developer-kit để checksum/evidence lịch sử
-còn tái hiện được. Chúng là snapshot, không phải nguồn backend hiện hành.
-`tools/prepare_setup.py` compose một setup mới từ template cũ và artifact
-backend theo lock; sửa adapter tương thích tại tool này khi template đổi.
-Không coi setup compose là đã nghiệm thu toàn bộ máy khách hoặc updater.
+Anki 0.3.0 đóng gói artifact backend mới ngay trong build/payload/runtime;
+start-setup.sh gốc dùng nó mặc định, không cần compose trước. Manager đã cài
+đọc cùng root/runtime với service, không giữ daemon/support fork riêng.
+
+Source backend WAV cũ, duplicate setup và tool build backend cũ đã gỡ khỏi
+main Anki. Tag v0.2.0 giữ bộ lịch sử; finding/RE vẫn có trên main và ghi rõ
+phạm vi. tools/prepare_setup.py dành cho dev đóng gói theo lock, không là
+bước khách bắt buộc. tools/build_release.py tạo manifest/checksum/archive
+Anki mới; không lấy checksum 0.2.0 để kiểm bản 0.3.0.
 
 Runtime đang chạy trên máy không đổi chỉ vì tái tổ chức source/docs. Muốn
 nâng cấp bản đã cài phải làm riêng theo hướng dẫn backup/verify/rollback.

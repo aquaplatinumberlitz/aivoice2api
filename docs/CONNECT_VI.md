@@ -27,7 +27,7 @@ GUI và worker có Wine prefix riêng, cùng đọc dữ liệu giọng trong m�
 
 | Thành phần | Lấy ở đâu | Công dụng |
 |---|---|---|
-| Bundle Anki 0.2.0 (lịch sử) | Repo private `aquaplatinumberlitz/aivoice2-anki` | Setup Qt, addon, backend WAV, worker đã build, dev-kit/docs |
+| Bộ cài Anki 0.3.0 | Repo private `aquaplatinumberlitz/aivoice2-anki` | Setup Qt, addon, artifact backend mới đã build, dev-kit/docs |
 | MSI Editor 2.14.1 | Bộ cài được cung cấp riêng | App và engine; không gồm Lang/voicebanks |
 | Lang và voicebanks | Dữ liệu được cung cấp riêng | Từ điển Standard/Kansai và các giọng được chọn |
 | aivoice2api | Repo private `aquaplatinumberlitz/aivoice2api` | Source backend, worker, test và artifact versioned |
@@ -67,8 +67,8 @@ Các lệnh sau giả định ROOT đúng bản muốn dùng, cùng tài khoản
 
 ## 3. Cài mới bằng setup
 
-1. Chuẩn bị setup dùng backend được ghim theo [hướng dẫn bộ cài Anki](https://github.com/aquaplatinumberlitz/aivoice2-anki/blob/main/docs/INSTALLER_VI.md).
-   Đóng Anki nếu chọn cài addon. Chạy wizard từ thư mục setup vừa tạo.
+1. Dùng bộ cài Anki 0.3.0 theo [hướng dẫn bộ cài](https://github.com/aquaplatinumberlitz/aivoice2-anki/blob/main/docs/INSTALLER_VI.md).
+   Backend mới đã đóng gói sẵn. Đóng Anki nếu chọn cài addon rồi chạy wizard.
 2. Chọn MSI Editor 2.14.1, nguồn Lang và nguồn voicebanks.
 3. Đánh dấu giọng muốn dùng. Akane dùng Kansai; các giọng còn lại dùng
    Standard theo quy tắc bộ bàn giao. Mỗi bank phải có đủ dữ liệu và runtime lic.
@@ -77,12 +77,11 @@ Các lệnh sau giả định ROOT đúng bản muốn dùng, cùng tài khoản
 6. Cài đặt và kiểm tra tới 100%; dùng Nghe thử và mở Anki/Editor nếu cần.
 
 ```bash
-bash "$AIVOICE_BUNDLE/build/setup-aivoice2api-0.1.0/start-setup.sh"
+bash "$AIVOICE_BUNDLE/start-setup.sh"
 ```
 
-Lệnh gốc `bash "$AIVOICE_BUNDLE/start-setup.sh"` tái hiện bundle 0.2.0 WAV
-lịch sử. Thư mục `build/setup-aivoice2api-0.1.0` là output được tạo theo lock,
-không phải file có sẵn khi clone. Không nhầm hai entry point này.
+Không cần tải backend hoặc compose trước khi chạy setup. Backend WAV cũ
+chỉ còn trong lịch sử/tag v0.2.0; main Anki dùng backend mới mặc định.
 
 Nếu đã có bản cài hoạt động, bỏ qua bước cài mới. Dùng shortcut Quản lý để
 thêm/gỡ giọng; không tự copy lẻ `.aivdic` vì còn registry, Lang và manifest.
@@ -252,9 +251,9 @@ tuần tự hóa synth; mỗi client có phần phát âm thanh riêng.
 
 ## 8. Nâng cấp backend chung để có streaming/cache quota (dev, tùy chọn)
 
-Bỏ qua bước này nếu chỉ cần kết nối hoạt động. Thư mục bundle 0.2.0 giữ
-nguyên để checksum phát hành vẫn tái hiện được. Nâng cấp **bản đã cài**, không
-thay payload trong bundle hoặc tự sửa hash phát hành.
+Bỏ qua nếu bản đã cài có backend đúng lock/capabilities cần dùng. Bộ cài
+Anki 0.3.0 dùng backend mới mặc định. Phần dưới dành cho nâng **bản đã cài**,
+không phải bước cài mới hoặc lý do tự sửa hash file phát hành.
 
 Bản nâng cấp lấy từ artifact `aivoice2api` cùng version/commit. Không cần
 Anki/vntext cài lại addon hoặc sửa URL. Giữ registry đã đăng ký giọng,
@@ -361,8 +360,8 @@ thêm/gỡ giọng vẫn phải đóng Editor/dừng service đúng instance. Kh
 “Tiếp tục khởi tạo” hay cài lại runtime cũ làm cách nâng cấp: nó có thể dùng
 snapshot backend cũ, không phải bản streaming đã triển khai. Manager 0.2.0
 còn giả định `Engine.speak()` trả 2 phần tử; source mới trả 3. Nếu cần
-khởi tạo lại hoặc demo qua manager, dùng manager từ setup đã compose theo
-lock rồi trỏ đúng bản cài. Không dùng manager snapshot cũ để kiểm backend mới.
+khởi tạo lại hoặc demo qua manager, dùng manager Anki 0.3.0 rồi trỏ đúng
+bản cài. Không dùng manager snapshot cũ để kiểm backend mới.
 
 Rollback nếu cần: dừng service, lấy đúng backup vừa in, khôi phục từng file
 trong `receipt.json.before` từ đường dẫn tương ứng dưới backup; file ghi
@@ -448,12 +447,11 @@ Một session cho mỗi phiên client; revision tăng khi đổi câu/giọng. H
 của prepare chỉ có nghĩa đã nhận việc. Stream chỉ thành công khi có frame
 kết thúc thành công; ngắt HTTP giữa chừng không được cache như audio hoàn chỉnh.
 
-Test backend nằm ở `aivoice2api/tests/`; chạy độc lập với bản đã cài. Test addon/setup và
-cơ chế đã RE nằm trong `Anki/developer-kit/tests/`; đọc chỉ mục bàn giao
-để chọn test liên quan, không chạy tool research lên bản khách đang dùng.
-Bundle giữ snapshot source/payload gốc: sửa `developer-kit` chưa có nghĩa
-addon đang cài hoặc `build/payload` đã đổi. Khi phát hành bản mới phải build
-đúng artifact, kiểm manifest và tăng version; không sửa hash bản 0.2.0 cũ.
+Test backend nằm ở `aivoice2api/tests/`; test installer hiện hành ở
+`aivoice2-anki/tests/`. Probe RE lịch sử còn trong developer-kit/tests;
+không chạy tool research lên bản khách đang dùng. Sửa source addon chưa
+tự rebuild .ankiaddon. Phát hành mới cần artifact, manifest/checksum và
+version tương ứng; bản 0.2.0 còn nguyên trong tag cũ.
 
 ## 12. Checklist trước khi báo “đã nối xong”
 

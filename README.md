@@ -26,6 +26,6 @@ Repo không chứa DLL Editor/engine, MSI, Lang, voicebanks, activation cá nhâ
 hoặc Wine prefix. Runtime vẫn cần app và dữ liệu tương thích do bộ cài quản lý.
 GUI patch và trình quản lý cài đặt tiếp tục nằm trong repo Anki.
 
-Bản phát hành Anki 0.2.0 giữ snapshot backend WAV lịch sử để checksum cũ còn
-kiểm chứng được. Không sửa snapshot đó làm backend mới; mọi phát triển backend
-sau khi tách thực hiện tại đây. Runtime đang cài không tự đổi khi clone repo.
+Bộ cài Anki 0.3.0 dùng artifact backend này mặc định ngay từ start-setup.sh.
+Source WAV cũ đã gỡ khỏi main Anki; lịch sử 0.2.0 giữ trong tag v0.2.0.
+Runtime đang cài không tự đổi khi clone repo; nâng cấp phải backup/verify.

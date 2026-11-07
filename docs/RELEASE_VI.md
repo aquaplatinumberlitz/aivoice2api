@@ -41,7 +41,7 @@ thể tạo hash khác; artifact phát hành đã kiểm chứng là file dùng 
    GitHub Release của `aquaplatinumberlitz/aivoice2api`.
 4. Trong Anki/vntext, cập nhật cùng `aivoice2api.lock.json`: version,
    source_commit, artifact, artifact_sha256 và release_tag. Không trỏ latest.
-5. Compose setup theo Anki INSTALLER, test client WAV/PCM và backup/rollback
+5. Cập nhật toàn bộ runtime payload theo Anki INSTALLER, test client WAV/PCM và backup/rollback
    phù hợp. Commit/push lock và tài liệu client sau khi artifact đã có sẵn.
 
 Không thay asset cũ cùng version bằng nội dung khác. Nâng version nếu sửa
@@ -60,14 +60,15 @@ sha256sum -c aivoice2api-0.1.0.tar.gz.sha256
 
 Anki `tools/prepare_setup.py` còn đối chiếu archive với SHA-256 trong lock,
 không chỉ tin file checksum tải kèm. Khách không cần tài khoản GitHub nếu
-nhà phát hành cung cấp setup đã compose; không cần compiler.
+nhà phát hành cung cấp bộ cài Anki đầy đủ; không cần compiler.
 
 ## Ranh giới đóng gói
 
 Runtime artifact không mang MSI, engine DLL, Lang, voicebanks, GUI patch,
 addon hoặc prefix. Setup Anki lấy GUI/addon từ bundle và backend từ release
-này. Bản bundle Anki 0.2.0 gốc giữ nguyên; không tự sửa SHA256SUMS của nó.
+này. Anki 0.3.0 đã đóng gói runtime mới mặc định; bản 0.2.0 giữ trong tag
+lịch sử, checksum 0.3.0 được tạo riêng bằng tools/build_release.py.
 
-Cài mới dùng setup compose. Bản đã cài nâng cấp có backup/manifest/receipt
+Cài mới chạy start-setup.sh của bộ Anki 0.3.0. Bản đã cài nâng cấp có backup/manifest/receipt
 riêng theo [CONNECT_VI.md mục 8](CONNECT_VI.md#8-nâng-cấp-backend-chung-để-có-streamingcache-quota-dev-tùy-chọn).
 Đây chưa phải updater crash-safe hoặc cơ chế tự update trên máy khách.
